@@ -12,7 +12,7 @@ def _get_changes():
     base = load_spec(str(FIXTURES / "base.yaml"))
     candidate = load_spec(str(FIXTURES / "candidate.yaml"))
     return (
-        run_all(base, candidate),
+        run_all(base, candidate, engine="legacy"),
         str(FIXTURES / "base.yaml"),
         str(FIXTURES / "candidate.yaml"),
     )
@@ -30,7 +30,7 @@ def test_json_output_structure():
 
 def test_json_no_breaking():
     base = load_spec(str(FIXTURES / "base.yaml"))
-    changes = run_all(base, base)
+    changes = run_all(base, base, engine="legacy")
     output = to_json(changes, "base.yaml", "base.yaml")
     data = json.loads(output)
     assert data["breaking"] is False
@@ -48,7 +48,7 @@ def test_markdown_contains_table():
 
 def test_markdown_no_breaking():
     base = load_spec(str(FIXTURES / "base.yaml"))
-    changes = run_all(base, base)
+    changes = run_all(base, base, engine="legacy")
     output = to_markdown(changes, "base.yaml", "base.yaml")
     assert "Contractor" in output
     assert "No Breaking Changes" in output

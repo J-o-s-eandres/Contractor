@@ -1,0 +1,23 @@
+info:
+  title: T
+  version: '1'
+openapi: 3.0.0
+paths:
+  /orders:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                amount:
+                  type: string
+                notes:
+                  type: string
+              required:
+              - amount
+              type: object
+        required: true
+      responses:
+        '201':
+          description: created

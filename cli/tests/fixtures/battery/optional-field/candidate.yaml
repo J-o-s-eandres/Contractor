@@ -1,0 +1,19 @@
+info:
+  title: T
+  version: '1'
+openapi: 3.0.0
+paths:
+  /users:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                type: object
+          description: ok

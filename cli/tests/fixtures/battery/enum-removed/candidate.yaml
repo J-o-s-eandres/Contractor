@@ -1,0 +1,19 @@
+info:
+  title: T
+  version: '1'
+openapi: 3.0.0
+paths:
+  /users:
+    get:
+      parameters:
+      - in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - active
+          - inactive
+          type: string
+      responses:
+        '200':
+          description: ok

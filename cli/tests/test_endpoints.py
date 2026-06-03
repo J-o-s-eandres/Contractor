@@ -34,7 +34,7 @@ from contractor.detectors import run_all
 def test_run_all_finds_four_breaking_changes():
     base = load_spec(str(FIXTURES / "base.yaml"))
     candidate = load_spec(str(FIXTURES / "candidate.yaml"))
-    changes = run_all(base, candidate)
+    changes = run_all(base, candidate, engine="legacy")
     assert len(changes) == 4
     kinds = {c.kind for c in changes}
     assert kinds == {
