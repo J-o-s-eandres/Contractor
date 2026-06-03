@@ -1,0 +1,70 @@
+# This spec has 4 breaking changes vs base.yaml:
+# 1. DELETE /users/{id} removed               → endpoint_removed
+# 2. GET /users: limit param became required   → required_param_added
+# 3. POST /orders: amount type string→number  → type_changed
+# 4. POST /orders: notes field now required    → required_field_added
+openapi: "3.0.0"
+info:
+  title: Test API
+  version: "2.0.0"
+paths:
+  /users:
+    get:
+      parameters:
+        - name: limit
+          in: query
+          required: true          # BREAKING: was false
+          schema:
+            type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [users]
+                properties:
+                  users:
+                    type: array
+  /users/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, name]
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+    # BREAKING: delete method removed
+  /orders:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id, notes]  # BREAKING: notes now required
+              properties:
+                user_id:
+                  type: string
+                amount:
+                  type: number            # BREAKING: was string
+                notes:
+                  type: string
+      responses:
+        "201":
+          description: Created
