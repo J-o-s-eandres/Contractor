@@ -107,16 +107,32 @@ $50k MRR in 18 months is top 1% — achievable but requires everything to go rig
 
 ### Language: Python
 - User's primary domain — fastest path to MVP
-- Libraries: `openapi-schema-validator`, `click`, `rich`, `PyJWT`, `PyInstaller`
+- Libraries: `click`, `rich`, `PyYAML`, `requests` (dev only)
 - Binary distribution: PyInstaller (standalone binary, no Python required in CI)
+
+### Detection Engine: oasdiff (subprocess)
+
+**Estrategia:** No implementamos detección propia. Delegamos toda la detección de breaking changes a [oasdiff](https://github.com/oasdiff/oasdiff) vía subprocess.
+
+```
+CLI → detect.py → subprocess: oasdiff breaking --format json → oasdiff_adapter.py → BreakingChange → formatters
+```
+
+**Por qué:**
+- oasdiff tiene 450+ reglas vs nuestras 4 originales
+- Recibe actualizaciones gratis (nuevas reglas de OpenAPI 3.1, webhooks, etc.)
+- Nosotros nos enfocamos en orquestación (equipos, notificaciones, historial)
+
+**Engine legacy** (`--engine legacy`) mantenido como fallback con las 4 reglas originales.
 
 ### Architecture (MVP)
 1. **CLI** — Python + Click + PyInstaller
    - `contractor diff --base main.yaml --candidate feature.yaml`
-   - Detects: endpoints removed, required params added, types changed, required fields added
-   - Outputs: exit code 0/1, console (colored), `report.md`
-   
-2. **Backend** — FastAPI + PostgreSQL + SQLAlchemy
+   - Detection via oasdiff subprocess (450+ breaking rules)
+   - Outputs: exit code 0/1/2, console (Rich), JSON, Markdown
+   - Fallback: `--engine legacy` (built-in, no oasdiff needed)
+
+2. **Backend** — FastAPI + PostgreSQL + SQLAlchemy (pending)
    - Auth: email + password
    - API Keys: generated per user, hashed in DB
    - JWT: offline validation (CLI does NOT call server on every run)
@@ -128,6 +144,8 @@ $50k MRR in 18 months is top 1% — achievable but requires everything to go rig
    - "Book a Demo" modal for lead capture
 
 ### Key Architecture Decisions
+- **oasdiff as subprocess**: Zero maintenance on our side for detection rules. Binary found in PATH or bundled.
+- **Adapter pattern**: oasdiff JSON → internal BreakingChange model. Si cambiamos de engine, solo cambia el adapter.
 - **JWT offline validation**: CLI verifies license locally using embedded public key. Server downtime never blocks customer CI/CD.
 - **No cloud storage of reports**: `report.md` generated locally. Customer owns their data.
 - **Self-hosted option**: Docker compose for Team/Enterprise tier.
@@ -220,9 +238,58 @@ CREATE TABLE usage_logs (
 
 ```
 contractor/
-├── index.html          # Landing page (dark/light + EN/ES)
-├── CLAUDE.md           # This file
-└── .claude/            # Claude Code config
+├── index.html                    # Landing page (dark/light + EN/ES)
+├── CLAUDE.md                     # This file
+├── .claude/                      # Claude Code config
+├── docs/
+│   ├── detection-engine.md       # oasdiff integration architecture
+│   └── frameworks/               # Per-framework OpenAPI export guides
+│       ├── README.md             # Master table (25 frameworks)
+│       ├── python/
+│       ├── javascript/
+│       ├── java/
+│       ├── go/
+│       ├── php/
+│       ├── ruby/
+│       ├── rust/
+│       ├── csharp/
+│       └── extra/
+└── cli/
+    ├── setup.py
+    ├── requirements.txt
+    ├── README.md                 # CLI docs (usage, options, architecture)
+    ├── templates/
+    │   └── github-action.yml     # CI/CD template
+    ├── contractor/
+    │   ├── __init__.py
+    │   ├── __main__.py
+    │   ├── cli.py                # Click CLI (diff command, --engine flag)
+    │   ├── detect.py             # oasdiff subprocess wrapper
+    │   ├── oasdiff_adapter.py    # JSON → BreakingChange mapper
+    │   ├── models.py             # BreakingChange dataclass
+    │   ├── parser.py             # YAML/JSON spec loader
+    │   ├── detectors/            # Legacy engine (4 built-in rules)
+    │   │   ├── endpoints.py
+    │   │   ├── parameters.py
+    │   │   ├── types.py
+    │   │   └── required.py
+    │   └── formatters/
+    │       ├── console.py        # Rich table output
+    │       ├── json_fmt.py       # JSON output
+    │       └── markdown.py       # Markdown report
+    ├── tests/
+    │   ├── test_cli.py           # CLI tests (exit codes, formats, --engine)
+    │   ├── test_detect.py        # Subprocess mock tests
+    │   ├── test_oasdiff_adapter.py # Adapter classification tests
+    │   ├── test_battery.py       # 13 integration tests against real oasdiff
+    │   ├── test_formatters.py    # Output format tests
+    │   ├── test_models.py        # Model tests
+    │   └── fixtures/
+    │       ├── base.yaml         # Legacy test fixtures
+    │       ├── candidate.yaml
+    │       └── battery/          # Battery test fixtures (auto-generated)
+    └── examples/
+        └── specs/                # Example API specs for demo
 ```
 
 ---
@@ -234,7 +301,7 @@ contractor/
 3. ⬜ Connect demo form to real backend (Typeform / Airtable / email)
 4. ⬜ Join developer communities and start contributing
 5. ⬜ Write first 3 LinkedIn posts (problem-focused, no selling)
-6. ⬜ Build CLI MVP (Python + Click)
+6. ✅ CLI MVP built (oasdiff engine + legacy fallback)
 7. ⬜ Build auth + API key backend (FastAPI)
 8. ⬜ 3 beta customers using CLI in CI/CD
 9. ⬜ Launch Free plan on GitHub (open source)
