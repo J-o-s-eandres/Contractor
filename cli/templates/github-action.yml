@@ -1,0 +1,49 @@
+# ──────────────────────────────────────────────────────────────────────
+# Contractor — API Contract Testing
+# Copy this to .github/workflows/contractor.yml in your repo.
+# Docs: https://contractor.dev
+# ──────────────────────────────────────────────────────────────────────
+name: API Contract Check
+
+on:
+  pull_request:
+    paths:
+      - '**/*.yaml'
+      - '**/*.yml'
+      - '**/*.json'
+
+jobs:
+  contract-check:
+    name: Check API contracts
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Contractor
+        run: |
+          curl -sSL https://github.com/your-org/contractor/releases/latest/download/contractor-linux -o contractor
+          chmod +x contractor
+
+      - name: Check API contracts
+        run: |
+          ./contractor diff \
+            --base origin/${{ github.base_ref }}/openapi.yaml \
+            --candidate openapi.yaml \
+            --output contractor-report.md
+
+      - name: Post PR comment
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('contractor-report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });
