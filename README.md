@@ -1,21 +1,23 @@
+<p align="right">
+  <a href="README.es.md">🇪🇸 Español</a>
+</p>
+
 # Contractor
 
-**Detect breaking changes in your OpenAPI specs before they hit production.**
-<br>*Detecta cambios disruptivos en tus especificaciones OpenAPI antes de que lleguen a producción.*
+**Detect breaking changes in your OpenAPI specs before they hit production.**  
+One command. No config. Zero false positives.
 
 ---
 
-## The Problem • El Problema
+## The Problem
 
-You renamed a field in your API response. Three services depend on it. You find out at 3 AM from a PagerDuty alert.  
-*Renombraste un campo en tu API. Tres servicios dependen de él. Te enteras a las 3 AM por una alerta de PagerDuty.*
+You renamed a field in your API response. Three services depend on it. You find out at 3 AM from a PagerDuty alert.
 
 Contractor catches this in CI/CD, before merge. It tells you exactly what changed, where, and who needs to know.
-*Contractor lo detecta en CI/CD, antes del merge. Te dice qué cambió, dónde, y quién necesita saberlo.*
 
 ---
 
-## Quick Start • Inicio Rápido
+## Quick Start
 
 ```bash
 pip install contractor
@@ -28,7 +30,7 @@ contractor diff --base openapi-main.yaml --candidate openapi-feature.yaml
 
 ---
 
-## What It Detects • Qué Detecta
+## What It Detects
 
 | Category | Example |
 |----------|---------|
@@ -44,7 +46,7 @@ contractor diff --base openapi-main.yaml --candidate openapi-feature.yaml
 
 ---
 
-## Usage • Uso
+## Usage
 
 ```bash
 contractor diff --base main.yaml --candidate feature.yaml
@@ -62,7 +64,7 @@ contractor diff --base main.yaml --candidate feature.yaml
 
 ---
 
-## Output Formats • Formatos de Salida
+## Output Formats
 
 ### Console (default)
 
@@ -92,7 +94,7 @@ Markdown table for PR comments. Generate with `--format markdown --output report
 
 ---
 
-## CI/CD Integration • Integración en CI/CD
+## CI/CD Integration
 
 ### GitHub Actions
 
@@ -117,7 +119,7 @@ api-contract-check:
 
 ---
 
-## Framework Support • Frameworks Soportados
+## Framework Support
 
 Python · JavaScript · Java · Go · PHP · Ruby · Rust · C# · Kotlin · Elixir · Scala
 
@@ -125,7 +127,7 @@ Works with FastAPI, Express, Spring Boot, Gin, Laravel, Rails, Actix-Web, ASP.NE
 
 ---
 
-## How It Works • Cómo Funciona
+## How It Works
 
 ```
 contractor
@@ -134,8 +136,7 @@ contractor
             └─ formatters (console, json, markdown)
 ```
 
-Detection powered by [oasdiff](https://github.com/oasdiff/oasdiff). We focus on team orchestration — alerts, PR comments, audit history, zero-config setup.  
-*La detección usa oasdiff. Nosotros nos enfocamos en orquestación de equipos — alertas, comentarios en PRs, historial, configuración cero.*
+Detection powered by [oasdiff](https://github.com/oasdiff/oasdiff). We focus on team orchestration — alerts, PR comments, audit history, zero-config setup.
 
 ---
 
@@ -147,8 +148,7 @@ Detection powered by [oasdiff](https://github.com/oasdiff/oasdiff). We focus on 
 
 ## Contributing
 
-MIT License. Contributions welcome.  
-*Licencia MIT. Contribuciones bienvenidas.*
+MIT License. Contributions welcome.
 
 See [`cli/README.md`](cli/README.md) for development setup and [`docs/detection-engine.md`](docs/detection-engine.md) for architecture details.
 
