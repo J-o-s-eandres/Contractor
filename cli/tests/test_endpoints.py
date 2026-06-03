@@ -26,3 +26,20 @@ def test_no_false_positives_when_identical():
 def test_empty_paths_no_crash():
     changes = detect_removed_endpoints({}, {})
     assert changes == []
+
+
+from contractor.detectors import run_all
+
+
+def test_run_all_finds_four_breaking_changes():
+    base = load_spec(str(FIXTURES / "base.yaml"))
+    candidate = load_spec(str(FIXTURES / "candidate.yaml"))
+    changes = run_all(base, candidate)
+    assert len(changes) == 4
+    kinds = {c.kind for c in changes}
+    assert kinds == {
+        "endpoint_removed",
+        "required_param_added",
+        "type_changed",
+        "required_field_added",
+    }
