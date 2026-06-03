@@ -202,11 +202,18 @@ cd cli
 python -m pytest tests/ -v
 ```
 
-55 tests covering:
+236 tests covering:
 
-- **Unit tests**: adapter classification, detect subprocess, models, formatters, legacy detectors
-- **Integration tests**: full pipeline with real oasdiff binary (identical, endpoint removed, type change, enum change, constraint change, optional field, security, fingerprint stability)
-- **CLI tests**: exit codes, formats, missing files, engine selection
+| Area | Tests | What's covered |
+|------|-------|---------------|
+| Adapter | 28 | Every rule ID mapping, level filtering, edge cases, fingerprints |
+| CLI | 25 | All flags, formats, output files, engines, mocking, error paths |
+| Formatters | 22 | Console/JSON/Markdown, all change kinds, grammar, edge cases |
+| Legacy engine | 37 | Endpoints/params/types/required detectors, parametrized methods |
+| Parser | 27 | JSON, YAML, BOM, comments, multi-doc, 3.1, Swagger 2.0, unicode |
+| Models | 22 | Equality, hash, serialization, all level/kind variants |
+| Detect subprocess | 5 | Subprocess mocking, binary search, flag passthrough |
+| Battery (integration) | 13 | Full pipeline with real oasdiff binary |
 
 ## License
 
