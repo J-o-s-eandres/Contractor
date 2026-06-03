@@ -239,6 +239,7 @@ CREATE TABLE usage_logs (
 ```
 contractor/
 ├── index.html                    # Landing page (dark/light + EN/ES)
+├── README.md                     # GitHub repo README (bilingual EN/ES)
 ├── CLAUDE.md                     # This file
 ├── .claude/                      # Claude Code config
 ├── docs/
