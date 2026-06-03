@@ -64,6 +64,36 @@ contractor diff --base main.yaml --candidate feature.yaml
 
 ---
 
+## Build del ejecutable
+
+Para generar un ejecutable de Windows independiente del CLI:
+
+```bat
+cd cli
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements-dev.txt
+pyinstaller contractor.spec
+```
+
+Esto generará el ejecutable en `cli/dist/contractor.exe`.
+
+También puedes usar el script de build incluido:
+
+```bat
+cd cli
+build-exe.bat
+```
+
+> Nota: el motor por defecto es `oasdiff`, que debe estar disponible en `PATH`. Si no deseas depender de `oasdiff`, ejecuta el binario con `--engine legacy`:
+>
+> ```bat
+dist\contractor.exe diff --base main.yaml --candidate feature.yaml --engine legacy
+> ```
+
+---
+
 ## Output Formats
 
 ### Console (default)
@@ -143,6 +173,10 @@ Detection powered by [oasdiff](https://github.com/oasdiff/oasdiff). We focus on 
 ## Test Suite
 
 ✅ **236 tests** — all passing. Covers adapters, CLI, formatters, legacy engine, parser, models, and end-to-end integration.
+
+---
+
+*Contractor is free and open-source (MIT). Enterprise features (team alerts, audit dashboard, SSO) are available.*
 
 ---
 

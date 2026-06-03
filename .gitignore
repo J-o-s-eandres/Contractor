@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# Contractor
+cli/report.md
+cli/contractor.egg-info/
+cli/.pytest_cache/
+cli/*.spec
+
+# Business strategy (local only, not for public repo)
+STRATEGY.md
+
+# IDE / config
+.claude/
+.superpowers/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
