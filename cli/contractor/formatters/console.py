@@ -30,15 +30,19 @@ def print_results(
     table.add_column("Location", style="yellow")
     table.add_column("Description", style="white")
 
-    kind_labels = {
+    kind_labels: dict[str, str] = {
         "endpoint_removed": "endpoint removed",
         "required_param_added": "required param added",
         "type_changed": "type changed",
         "required_field_added": "required field added",
+        "other": "other",
     }
 
     for c in changes:
-        table.add_row(kind_labels.get(c.kind, c.kind), c.location, c.description)
+        label = kind_labels.get(c.kind, c.kind)
+        if c.rule_id:
+            label = f"{label} ({c.rule_id})"
+        table.add_row(label, c.location, c.description)
 
     console.print(table)
     console.print()

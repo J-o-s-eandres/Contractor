@@ -22,6 +22,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install oasdiff
+        run: |
+          curl -sSL https://github.com/oasdiff/oasdiff/releases/latest/download/oasdiff-linux -o /usr/local/bin/oasdiff
+          chmod +x /usr/local/bin/oasdiff
+
       - name: Download Contractor
         run: |
           curl -sSL https://github.com/your-org/contractor/releases/latest/download/contractor-linux -o contractor

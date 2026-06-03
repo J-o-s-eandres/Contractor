@@ -25,15 +25,18 @@ def to_markdown(
         "|------|----------|-------------|",
     ]
 
-    kind_labels = {
+    kind_labels: dict[str, str] = {
         "endpoint_removed": "Endpoint removed",
         "required_param_added": "Required param added",
         "type_changed": "Type changed",
         "required_field_added": "Required field added",
+        "other": "Other",
     }
 
     for c in changes:
         label = kind_labels.get(c.kind, c.kind)
+        if c.rule_id:
+            label = f"{label}<br/>({c.rule_id})"
         lines.append(f"| {label} | `{c.location}` | {c.description} |")
 
     lines += [

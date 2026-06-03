@@ -45,7 +45,14 @@ def cli() -> None:
     type=click.Path(dir_okay=False),
     help="Write a Markdown report to this file path (in addition to console output).",
 )
-def diff(base: str, candidate: str, fmt: str, output: str | None) -> None:
+@click.option(
+    "--engine",
+    default="oasdiff",
+    type=click.Choice(["oasdiff", "legacy"], case_sensitive=False),
+    hidden=True,
+    help="Detection engine to use.",
+)
+def diff(base: str, candidate: str, fmt: str, output: str | None, engine: str) -> None:
     """Detect breaking changes between two OpenAPI specs.
 
     Exits with code 0 if no breaking changes are found, 1 otherwise.
@@ -57,7 +64,17 @@ def diff(base: str, candidate: str, fmt: str, output: str | None) -> None:
         click.echo(f"Error: {exc}", err=True)
         sys.exit(2)
 
-    changes = run_all(base_spec, candidate_spec)
+    try:
+        changes = run_all(
+            base_spec,
+            candidate_spec,
+            engine=engine,
+            base_path=base,
+            candidate_path=candidate,
+        )
+    except FileNotFoundError as exc:
+        click.echo(f"Error: {exc}", err=True)
+        sys.exit(2)
 
     if fmt == "json":
         click.echo(to_json(changes, base, candidate))

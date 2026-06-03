@@ -10,6 +10,7 @@ def to_json(changes: list[BreakingChange], base_path: str, candidate_path: str) 
             "count": len(changes),
             "base": base_path,
             "candidate": candidate_path,
+            "engine": "oasdiff",
             "changes": [asdict(c) for c in changes],
         },
         indent=2,
