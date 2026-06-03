@@ -1,0 +1,51 @@
+openapi: "3.0.0"
+info:
+  title: E-Commerce API — v2
+  version: "2.0.0"
+paths:
+  /orders:
+    get:
+      summary: List orders
+      parameters:
+        - name: status
+          in: query
+          required: true          # BREAKING: era false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        total:
+                          type: number     # BREAKING: era string
+    post:
+      summary: Create an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id, email]   # BREAKING: email es nuevo requerido
+              properties:
+                user_id:
+                  type: string
+                email:
+                  type: string
+                total:
+                  type: string
+      responses:
+        "201":
+          description: Created
+  # BREAKING: DELETE /orders/{id} fue eliminado completamente
