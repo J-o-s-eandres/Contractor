@@ -34,7 +34,7 @@ def _compare_schemas(
                 path=path,
                 method=method,
                 location=location_prefix,
-                description=f"Field '{location_prefix}' type changed: '{base_type}' → '{candidate_type}'",
+                description=f"Field '{location_prefix}' type changed: '{base_type}' -> '{candidate_type}'",
                 base_value=base_type,
                 candidate_value=candidate_type,
             )
