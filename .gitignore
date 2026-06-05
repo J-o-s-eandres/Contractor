@@ -22,6 +22,18 @@ STRATEGY.md
 .vscode/
 .idea/
 
+# Pitch PDFs (business content, not for public repo)
+*.pdf
+
+# Landing page (local only, not for public repo)
+index.html
+
+# Build artifacts / logs
+cli/build.log
+
+# Residual
+nul
+
 # OS
 .DS_Store
 Thumbs.db
