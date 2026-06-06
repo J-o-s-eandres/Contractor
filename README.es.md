@@ -146,19 +146,7 @@ La detección usa [oasdiff](https://github.com/oasdiff/oasdiff). Nosotros nos en
 
 ---
 
-## Gratuito vs Pago
-
-| Característica | Free | Pro ($29/mes) | Team ($199/mes) |
-|----------------|------|---------------|-----------------|
-| CLI diff | ✅ | ✅ | ✅ |
-| Salida JSON / Markdown | ✅ | ✅ | ✅ |
-| Motor legacy (fallback) | ✅ | ✅ | ✅ |
-| Guías de exportación por framework | ✅ | ✅ | ✅ |
-| Comentarios automáticos en PRs | — | ✅ | ✅ |
-| Alertas en Slack / Teams | — | ✅ | ✅ |
-| Mapa de impacto por equipo | — | — | ✅ |
-| Dashboard de auditoría | — | — | ✅ |
-| SSO | — | — | ✅ |
+*Contractor es gratuito y de código abierto (MIT). Las funciones Enterprise (alertas de equipo, dashboard de auditoría, SSO) están disponibles.*
 
 ---
 
