@@ -3,19 +3,23 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 HERE = Path(__file__).parent
-README = (HERE / "README.md").read_text(encoding="utf-8")
+
+_readme = ""
+for p in [HERE / "README.md", HERE.parent / "README.md"]:
+    if p.exists():
+        _readme = p.read_text(encoding="utf-8")
+        break
 
 setup(
-    name="contractor",
+    name="contractor-cli",
     version="0.1.0",
     description="Detect breaking changes in your OpenAPI specs before they hit production",
-    long_description=README,
+    long_description=_readme,
     long_description_content_type="text/markdown",
     url="https://github.com/J-o-s-eandres/Contractor",
     author="Joseandres",
     license="MIT",
-    packages=find_packages(),
-    include_package_data=True,
+    packages=find_packages(exclude=["tests", "tests.*"]),
     install_requires=[
         "click>=8.1",
         "rich>=13",
@@ -30,7 +34,6 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
