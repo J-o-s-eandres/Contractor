@@ -155,6 +155,8 @@ See [`cli/README.md`](cli/README.md) for development setup and [`docs/detection-
 ---
 
 <p align="center">
+  <a href="https://pypi.org/project/contractor-cli/"><img src="https://img.shields.io/pypi/v/contractor-cli" alt="PyPI"></a>
+  <a href="https://github.com/J-o-s-eandres/Contractor/releases/latest"><img src="https://img.shields.io/github/v/release/J-o-s-eandres/Contractor" alt="Release"></a>
   <a href="#"><img src="https://img.shields.io/badge/tests-236%20%E2%9C%93-brightgreen" alt="Tests"></a>
   <a href="#"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
   <a href="#"><img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python"></a>
