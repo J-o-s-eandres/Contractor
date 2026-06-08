@@ -20,7 +20,7 @@ Contractor lo detecta en CI/CD, antes del merge. Te dice qué cambió, dónde, y
 ## Inicio Rápido
 
 ```bash
-pip install contractor
+pip install contractor-cli
 
 # Compara dos especificaciones OpenAPI:
 contractor diff --base openapi-main.yaml --candidate openapi-feature.yaml
@@ -61,6 +61,16 @@ contractor diff --base main.yaml --candidate feature.yaml
 | `--engine` | Motor de detección: `oasdiff` o `legacy` | `oasdiff` |
 
 **Códigos de salida:** `0` = seguro de mergear • `1` = breaking detectado • `2` = error
+
+---
+
+## Windows Binary
+
+Descarga el ejecutable standalone desde [GitHub Releases](https://github.com/J-o-s-eandres/Contractor/releases/latest) (no requiere Python ni oasdiff):
+
+```bat
+contractor.exe diff --base main.yaml --candidate feature.yaml
+```
 
 ---
 

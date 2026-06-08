@@ -20,10 +20,9 @@ Contractor catches this in CI/CD, before merge. It tells you exactly what change
 ## Quick Start
 
 ```bash
-pip install contractor
+pip install contractor-cli
 
 # Compare two OpenAPI specs:
-contractor diff --base openapi-main.yaml --candidate openapi-feature.yaml
 ```
 
 **Requirements:** Python 3.10+ and [oasdiff](https://github.com/oasdiff/oasdiff) v1.18+ (`brew install oasdiff`)
@@ -61,6 +60,16 @@ contractor diff --base main.yaml --candidate feature.yaml
 | `--engine` | Detection engine: `oasdiff` or `legacy` | `oasdiff` |
 
 **Exit codes:** `0` = safe to merge • `1` = breaking detected • `2` = error
+
+---
+
+## Windows Binary
+
+Download the standalone executable from [GitHub Releases](https://github.com/J-o-s-eandres/Contractor/releases/latest) (no Python or oasdiff needed):
+
+```bat
+contractor.exe diff --base main.yaml --candidate feature.yaml
+```
 
 ---
 
