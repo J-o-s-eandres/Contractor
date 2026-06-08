@@ -20,10 +20,9 @@ Contractor catches this in CI/CD, before merge. It tells you exactly what change
 ## Quick Start
 
 ```bash
-pip install contractor
+pip install contractor-cli
 
 # Compare two OpenAPI specs:
-contractor diff --base openapi-main.yaml --candidate openapi-feature.yaml
 ```
 
 **Requirements:** Python 3.10+ and [oasdiff](https://github.com/oasdiff/oasdiff) v1.18+ (`brew install oasdiff`)
@@ -64,6 +63,47 @@ contractor diff --base main.yaml --candidate feature.yaml
 
 ---
 
+## Windows Binary
+
+Download the standalone executable from [GitHub Releases](https://github.com/J-o-s-eandres/Contractor/releases/latest) (no Python or oasdiff needed):
+
+```bat
+contractor.exe diff --base main.yaml --candidate feature.yaml
+```
+
+---
+
+## Build del ejecutable
+
+Para generar un ejecutable de Windows independiente del CLI:
+
+```bat
+cd cli
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements-dev.txt
+pyinstaller contractor.spec
+```
+
+Esto generará el ejecutable en `cli/dist/contractor.exe`.
+
+También puedes usar el script de build incluido:
+
+```bat
+cd cli
+build-exe.bat
+```
+
+> Nota: el motor por defecto es `oasdiff`, que debe estar disponible en `PATH`. Si no deseas depender de `oasdiff`, ejecuta el binario con `--engine legacy`:
+>
+> ```bat
+dist\contractor.exe diff --base main.yaml --candidate feature.yaml --engine legacy
+> ```
+
+---
+
+>>>>>>> 593af19 (docs: add Windows Binary section, fix pip install command in READMEs)
 ## Output Formats
 
 ### Console (default)
