@@ -298,13 +298,37 @@ contractor/
 
 ## Next Steps (In Order)
 
-1. ✅ Landing page live
-2. ⬜ Set up domain (contractor.dev or similar)
-3. ⬜ Connect demo form to real backend (Typeform / Airtable / email)
-4. ⬜ Join developer communities and start contributing
-5. ⬜ Write first 3 LinkedIn posts (problem-focused, no selling)
-6. ✅ CLI MVP built (oasdiff engine + legacy fallback)
-7. ⬜ Build auth + API key backend (FastAPI)
-8. ⬜ 3 beta customers using CLI in CI/CD
-9. ⬜ Launch Free plan on GitHub (open source)
-10. ⬜ Product Hunt launch
+1. ✅ CLI MVP built (oasdiff engine + legacy fallback)
+2. ⬜ Build auth + API key backend (FastAPI)
+3. ⬜ 3 beta customers using CLI in CI/CD
+4. ⬜ Launch Free plan on GitHub (open source)
+5. ⬜ Product Hunt launch
+
+---
+
+## Publishing (Internal)
+
+### PyPI
+
+```bash
+cd cli
+pip install build twine
+python -m build . --outdir dist/
+twine upload dist/contractor_cli-* -u __token__ -p pypi-xxxxxxxx
+```
+
+### GitHub Release
+
+```bash
+# Create release
+curl -s -X POST https://api.github.com/repos/J-o-s-eandres/Contractor/releases \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"tag_name":"v0.1.0","name":"v0.1.0","body":"...","draft":false,"prerelease":false}'
+
+# Upload binary
+curl -s -X POST "https://uploads.github.com/repos/J-o-s-eandres/Contractor/releases/<id>/assets?name=contractor.exe" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/octet-stream" \
+  --data-binary @"cli/dist/contractor.exe"
+```
