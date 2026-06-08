@@ -4,5 +4,3 @@ __pycache__/
 dist/
 build/
 
-# Packaging copy of root README.md (tracked via setup.py, not git)
-README.md
