@@ -124,3 +124,32 @@ contractor/
 3. ⬜ 3 beta customers using CLI in CI/CD
 4. ⬜ Launch Free plan on GitHub (open source)
 5. ⬜ Product Hunt launch
+
+---
+
+## Publishing (Internal)
+
+### PyPI
+
+```bash
+cd cli
+pip install build twine
+python -m build . --outdir dist/
+twine upload dist/contractor_cli-* -u __token__ -p pypi-xxxxxxxx
+```
+
+### GitHub Release
+
+```bash
+# Create release
+curl -s -X POST https://api.github.com/repos/J-o-s-eandres/Contractor/releases \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"tag_name":"v0.1.0","name":"v0.1.0","body":"...","draft":false,"prerelease":false}'
+
+# Upload binary
+curl -s -X POST "https://uploads.github.com/repos/J-o-s-eandres/Contractor/releases/<id>/assets?name=contractor.exe" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/octet-stream" \
+  --data-binary @"cli/dist/contractor.exe"
+```
